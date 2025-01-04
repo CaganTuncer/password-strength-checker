@@ -1,9 +1,105 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength Checker</title>
+    <style>
+        /* Body styling */
+        body {
+            font-family: Arial, sans-serif; /* Change to your preferred font */
+            background-color: #f4f4f4; /* Light gray background */
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+    
+        /* Header styling */
+        h1 {
+            font-size: 2em;
+            color: #333;
+            margin-top: 20px;
+        }
+    
+        /* Form container */
+        form {
+            background-color: #ffffff; /* White form background */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px auto;
+            width: 300px; /* Set a fixed width */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    
+        /* Strength bar */
+        #strength-bar {
+            width: 100%;
+            height: 10px;
+            background-color: lightgray;
+            margin-top: 10px;
+            border-radius: 5px; /* Rounded corners */
+            overflow: hidden;
+        }
+    
+        #strength-bar div {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s ease-in-out;
+        }
+    
+        .weak { background-color: #ff6b6b; } /* Soft red */
+        .medium { background-color: #ffa502; } /* Bright orange */
+        .strong { background-color: #2ed573; } /* Vibrant green */
+    
+        /* Inputs and buttons */
+        input {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            width: calc(100% - 20px);
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+    
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    
+        /* Password strength text */
+        p {
+            font-size: 1em;
+            color: #555;
+            margin-top: 10px;
+        }
+    </style>
+    
+</head>
+
+
 <h1>Password Strength Checker</h1>
-<form method="post">
+<form method="post" action="{% url 'check_password' %}">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Check Password</button>
+        <label for="password">Enter Password:</label>
+        <input type="password" id="password" name="password">
+        <button type="submit" id="submit-btn">Submit</button>
 </form>
 {% if strength %}
-    <p>Your password is: {{ strength }}</p>
+    <div id="strength-bar">
+        <div id="strength-indicator" 
+            style="width: {{ strength }}%;"
+            class="{% if strength < 33 %}weak{% elif strength < 66 %}medium{% else %}strong{% endif %}">
+        </div>
+    </div>
+    <p>Your password strength: {{ strength }}%</p>
 {% endif %}

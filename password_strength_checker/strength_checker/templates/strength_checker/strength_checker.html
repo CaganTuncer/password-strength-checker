@@ -1,0 +1,9 @@
+<h1>Password Strength Checker</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Check Password</button>
+</form>
+{% if strength %}
+    <p>Your password is: {{ strength }}</p>
+{% endif %}

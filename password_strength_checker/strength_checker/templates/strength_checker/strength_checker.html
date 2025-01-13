@@ -94,6 +94,15 @@
         <input type="password" id="password" name="password">
         <button type="submit" id="submit-btn">Submit</button>
 </form>
+{% if strings %}
+    <u1>
+        {% for string in strings %}
+            <li>
+                {{string}}
+            </li>
+        {% endfor %}
+    </u1>
+{% endif %}
 {% if strength %}
     <div id="strength-bar">
         <div id="strength-indicator" 
